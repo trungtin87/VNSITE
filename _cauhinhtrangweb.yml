@@ -6,7 +6,7 @@
 ten_trangweb: "Blog của tôi"
 mo_ta: "Một blog cá nhân tạo bằng VNSITE — trình tạo website tĩnh cho người Việt"
 url: "https://trungtin87.github.io"        # domain gốc, dùng để sinh link tuyệt đối cho SEO
-baseurl: "/vnsite"                             # để trống nếu là user.github.io ; đặt "/ten-repo" nếu là project site
+baseurl: "/VNSITE"                             # để trống nếu là user.github.io ; đặt "/ten-repo" nếu là project site
 ngon_ngu: "vi"
 tac_gia: "Bùi Trung Tín"
 email: "trungtincatp@gmail.com"
