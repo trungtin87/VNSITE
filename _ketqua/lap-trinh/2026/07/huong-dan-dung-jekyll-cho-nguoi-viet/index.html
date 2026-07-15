@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng dẫn dùng Jekyll cho người Việt — Blog của tôi</title>
+    <meta name="description" content="Một blog cá nhân tạo bằng VNSITE — trình tạo website tĩnh cho người Việt">
+    <meta property="og:title" content="Hướng dẫn dùng Jekyll cho người Việt">
+    <meta property="og:description" content="Tổng quan nhanh về Jekyll và vì sao VNSITE ra đời để thay thế nó cho người dùng Việt.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://tenban.github.io/lap-trinh/2026/07/huong-dan-dung-jekyll-cho-nguoi-viet/">
+    <meta property="og:image" content="https://tenban.github.io/tainguyen/hinhanh/og-mac-dinh.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hướng dẫn dùng Jekyll cho người Việt">
+    <meta name="twitter:description" content="Tổng quan nhanh về Jekyll và vì sao VNSITE ra đời để thay thế nó cho người dùng Việt.">
+    <meta name="twitter:image" content="https://tenban.github.io/tainguyen/hinhanh/og-mac-dinh.png">
+    <link rel="icon" href="/tainguyen/hinhanh/favicon.png">
+    <link rel="stylesheet" href="/tainguyen/css/vnstyle.css">
+    <link rel="stylesheet" href="/tainguyen/css/main.css">
+</head>
+<body>
+    <header hien-thi="khung-chua" class="phan-dau-trang">
+    <a class="ten-trang" href="/">Blog của tôi</a>
+    <button id="nut-doi-che-do" type="button" aria-label="Chuyển chế độ sáng/tối" title="Chuyển chế độ sáng/tối">
+        <span class="bieu-tuong-che-do">🌙</span>
+    </button>
+</header>
+
+    <div hien-thi="khung-chua" class="hop-tim-kiem"><input type="search" id="o-tim-kiem" placeholder="Tìm bài viết..." aria-label="Tìm bài viết" autocomplete="off"><ul id="ket-qua-tim-kiem" class="ket-qua-tim-kiem"></ul></div>
+    <nav hien-thi="khung-chua" class="thanh-dieu-huong">
+    <ul>
+        
+        <li><a href="/">Trang chủ</a></li>
+        
+        <li><a href="/bai-viet/">Bài viết</a></li>
+        
+        <li><a href="/du-an/">Dự án</a></li>
+        
+        <li><a href="/gioi-thieu/">Giới thiệu</a></li>
+        
+        <li><a href="/cv/">CV</a></li>
+        
+    </ul>
+</nav>
+
+
+    <main hien-thi="khung-chua" class="noi-dung-chinh">
+        
+<article class="bai-viet">
+    <header class="dau-bai-viet">
+        <p class="duong-dan-chuyen-muc">
+            <a href="/lap-trinh/">lap-trinh</a>
+        </p>
+        <h1>Hướng dẫn dùng Jekyll cho người Việt</h1>
+        <p class="meta-bai-viet">
+            <time datetime="2026-07-13">2026-07-13</time>
+            · 1 phút đọc
+        </p>
+        <div class="danh-sach-tag">
+            
+            <a class="the-tag" href="/tag/jekyll/">#jekyll</a>
+            
+            <a class="the-tag" href="/tag/static-site/">#static-site</a>
+            
+            <a class="the-tag" href="/tag/huong-dan/">#huong-dan</a>
+            
+        </div>
+    </header>
+
+    <div class="noi-dung-markdown">
+        <p>Jekyll là một trong những trình tạo website tĩnh phổ biến nhất, đặc biệt vì được
+GitHub Pages hỗ trợ sẵn. Tuy nhiên, với người dùng Việt Nam, Jekyll có vài điểm
+bất tiện: cú pháp Liquid tiếng Anh, phụ thuộc Ruby, và không tối ưu cho nội dung
+tiếng Việt (slug, dấu, bộ gõ).</p>
+<!--tomtat-->
+
+<h2 id="vi-sao-can-mot-giai-phap-rieng">Vì sao cần một giải pháp riêng</h2>
+<p>VNSITE ra đời với 3 mục tiêu chính:</p>
+<ol>
+<li>Chỉ dùng Python — không cần cài Ruby hay Node.js</li>
+<li>Cú pháp template bằng tiếng Việt (<code>{% ke_thua %}</code>, <code>{% moi ... trong ... %}</code>)</li>
+<li>Xử lý đúng các vấn đề đặc thù tiếng Việt: bỏ dấu khi tạo slug, chuyên mục,
+   phân loại bài viết theo tháng/năm</li>
+</ol>
+<h2 id="vi-du-mot-khoi-code">Ví dụ một khối code</h2>
+<p>Dưới đây là ví dụ cách một bài viết VNSITE khai báo front matter:</p>
+<div class="codehilite"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">tieu_de</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Tiêu</span><span class="nv"> </span><span class="s">đề</span><span class="nv"> </span><span class="s">bài</span><span class="nv"> </span><span class="s">viết&quot;</span>
+<span class="nt">chuyen_muc</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;lap-trinh&quot;</span>
+<span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">python</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">vnsite</span><span class="p p-Indicator">]</span>
+<span class="nn">---</span>
+</code></pre></div>
+
+<p>Nút "Sao chép" ở góc phải mỗi khối code sẽ giúp người đọc copy nhanh mà không
+cần bôi đen thủ công.</p>
+<h2 id="ket-luan">Kết luận</h2>
+<p>Nếu bạn đang tìm một công cụ blog tĩnh tối giản, hoàn toàn bằng Python và thân
+thiện với người Việt, VNSITE là một lựa chọn đáng thử.</p>
+    </div>
+</article>
+
+<aside class="thanh-ben">
+    <nav id="muc-luc" class="muc-luc" aria-label="Mục lục bài viết">
+        <p class="tieu-de-thanh-ben">Mục lục</p>
+        <!-- muc-luc.js sẽ tự quét thẻ h2/h3 trong .noi-dung-markdown và điền vào đây -->
+    </nav>
+
+    
+</aside>
+
+
+<section class="bai-lien-quan">
+    <h2>Bài viết liên quan</h2>
+    <ul class="luoi-bai-viet">
+        
+        <li class="the-bai-viet">
+            <a href="/lap-trinh/2026/07/tai-sao-chon-python-lam-cong-cu-tao-web-tinh/">Tại sao chọn Python làm công cụ tạo web tĩnh</a>
+            <div class="excerpt"><p>Có rất nhiều trình tạo website tĩnh trên thị trường: Jekyll (Ruby), Hugo (Go),
+Next.js/Gatsby (Node.js)... Vậy tại sao VNSITE lại chọn Python?</p></div>
+        </li>
+        
+    </ul>
+</section>
+
+    </main>
+
+    <footer hien-thi="khung-chua" class="phan-chan-trang">
+    <p>© Tên của bạn — Tạo bằng <strong>VNSITE</strong></p>
+    <div class="lien-ket-mang-xa-hoi">
+        <a href="https://github.com/tenban">GitHub</a>
+    </div>
+</footer>
+
+
+    <script>window.VNSITE_BASEURL = "";</script>
+    <script src="/tainguyen/js/che-do-toi-sang.js"></script>
+    <script src="/tainguyen/js/muc-luc.js"></script>
+    <script src="/tainguyen/js/sao-chep-code.js"></script>
+    <script src="/tainguyen/js/tim-kiem.js"></script>
+</body>
+</html>
