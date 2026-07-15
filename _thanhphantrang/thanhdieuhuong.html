@@ -1,0 +1,7 @@
+<nav hien-thi="khung-chua" class="thanh-dieu-huong">
+    <ul>
+        {% moi muc trong cau_hinh.dieu_huong %}
+        <li><a href="{{ cau_hinh.baseurl }}{{ muc.duong_dan }}">{{ muc.ten }}</a></li>
+        {% het %}
+    </ul>
+</nav>

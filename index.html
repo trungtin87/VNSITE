@@ -1,0 +1,42 @@
+{% ke_thua "trangmacdinh.html" %}
+{% khoi noi_dung %}
+<section class="trang-chu-mo-dau">
+    <h1>{{ cau_hinh.ten_trangweb }}</h1>
+    <p>{{ cau_hinh.mo_ta }}</p>
+</section>
+
+<section>
+    <h2>Bài viết mới nhất</h2>
+    <ul class="luoi-bai-viet">
+        {% moi bai trong danh_sach_bai_viet %}
+        <li class="the-bai-viet">
+            <a href="{{ bai.url }}"><h3>{{ bai.tieu_de }}</h3></a>
+            <p class="meta-bai-viet"><time>{{ bai.ngay }}</time> · {{ bai.thoi_gian_doc }} phút đọc</p>
+            <div class="excerpt">{{ bai.excerpt }}</div>
+        </li>
+        {% het %}
+    </ul>
+</section>
+
+<section>
+    <h2>Dự án nổi bật</h2>
+    <div class="luoi-du-an">
+        {% moi du_an trong danh_sach_du_an %}
+        <a class="the-du-an" href="{{ du_an.url }}">
+            <img src="{{ du_an.anh_dai_dien }}" alt="{{ du_an.tieu_de }}" loading="lazy">
+            <h3>{{ du_an.tieu_de }}</h3>
+            <p>{{ du_an.mo_ta_ngan }}</p>
+        </a>
+        {% het %}
+    </div>
+</section>
+
+<section>
+    <h2>Thành viên đóng góp</h2>
+    <ul>
+        {% moi tv trong du_lieu.thanh_vien %}
+        <li><a href="{{ tv.github }}">{{ tv.ten }}</a> — {{ tv.vai_tro }}</li>
+        {% het %}
+    </ul>
+</section>
+{% end %}

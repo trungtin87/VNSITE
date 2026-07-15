@@ -1,0 +1,48 @@
+{% ke_thua "trangmacdinh.html" %}
+{% khoi noi_dung %}
+<article class="trang-cv">
+    <header class="dau-trang-cv">
+        <h1>{{ du_lieu.ho_so.ho_ten }}</h1>
+        <p class="chuc-danh-cv">{{ du_lieu.ho_so.chuc_danh }}</p>
+        <p class="gioi-thieu-cv">{{ du_lieu.ho_so.gioi_thieu }}</p>
+    </header>
+
+    <section class="phan-cv">
+        <h2>Kinh nghiệm làm việc</h2>
+        <ul class="danh-sach-cv">
+            {% moi kn trong du_lieu.ho_so.kinh_nghiem %}
+            <li class="muc-cv">
+                <div class="dau-muc-cv">
+                    <strong>{{ kn.chuc_vu }}</strong> — {{ kn.noi_lam }}
+                    <span class="thoi-gian-cv">{{ kn.thoi_gian }}</span>
+                </div>
+                <p>{{ kn.mo_ta }}</p>
+            </li>
+            {% het %}
+        </ul>
+    </section>
+
+    <section class="phan-cv">
+        <h2>Học vấn</h2>
+        <ul class="danh-sach-cv">
+            {% moi hv trong du_lieu.ho_so.hoc_van %}
+            <li class="muc-cv">
+                <div class="dau-muc-cv">
+                    <strong>{{ hv.truong }}</strong> — {{ hv.nganh }}
+                    <span class="thoi-gian-cv">{{ hv.thoi_gian }}</span>
+                </div>
+            </li>
+            {% het %}
+        </ul>
+    </section>
+
+    <section class="phan-cv">
+        <h2>Kỹ năng</h2>
+        <div class="danh-sach-tag">
+            {% moi ky trong du_lieu.ho_so.ky_nang %}
+            <span class="the-tag">{{ ky }}</span>
+            {% het %}
+        </div>
+    </section>
+</article>
+{% end %}
