@@ -1,10 +1,9 @@
 ---
-tieu_de: "Hướng dẫn dùng Jekyll cho người Việt"
+tieu_de: "Hướng dẫn dùng VNSITE cho người Việt"
 chuyen_muc: "lap-trinh"
 tags: [jekyll, static-site, huong-dan]
 mo_ta: "Tổng quan nhanh về Jekyll và vì sao VNSITE ra đời để thay thế nó cho người dùng Việt."
 ---
-
 Jekyll là một trong những trình tạo website tĩnh phổ biến nhất, đặc biệt vì được
 GitHub Pages hỗ trợ sẵn. Tuy nhiên, với người dùng Việt Nam, Jekyll có vài điểm
 bất tiện: cú pháp Liquid tiếng Anh, phụ thuộc Ruby, và không tối ưu cho nội dung
@@ -38,5 +37,5 @@ cần bôi đen thủ công.
 
 ## Kết luận
 
-Nếu bạn đang tìm một công cụ blog tĩnh tối giản, hoàn toàn bằng Python và thân
-thiện với người Việt, VNSITE là một lựa chọn đáng thử.
+Nếu bạn đang tìm một công cụ blog tĩnh tối giản, hoàn toàn thân
+thiện với người Việt, VNSITE là một lựa chọn xứng đáng.

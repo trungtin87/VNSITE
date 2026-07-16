@@ -8,7 +8,7 @@
     <ul class="luoi-bai-viet">
         {% moi bai trong danh_sach_bai_viet %}
         <li class="the-bai-viet">
-            <a href="{{ cau_hinh.baseurl }}{{ bai.url }}"><h3>{{ bai.tieu_de }}</h3></a>
+            <a href="{{ bai.url }}"><h3>{{ bai.tieu_de }}</h3></a>
             <p class="meta-bai-viet"><time>{{ bai.ngay }}</time> · {{ bai.thoi_gian_doc }} phút đọc</p>
             <div class="excerpt">{{ bai.excerpt }}</div>
         </li>
@@ -17,7 +17,7 @@
 
     <div class="luoi-du-an">
         {% moi p trong danh_sach_du_an %}
-        <a class="the-du-an" href="{{ cau_hinh.baseurl }}{{ p.url }}">
+        <a class="the-du-an" href="{{ p.url }}">
             <img src="{{ p.anh_dai_dien }}" alt="{{ p.tieu_de }}" loading="lazy">
             <h3>{{ p.tieu_de }}</h3>
             <p>{{ p.mo_ta_ngan }}</p>

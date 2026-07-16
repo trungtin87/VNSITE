@@ -6,9 +6,8 @@ import html
 def sinh_the_seo(cau_hinh: dict, tieu_de: str, mo_ta: str, url_trang: str, anh: str = None) -> str:
     anh = anh or cau_hinh.get("anh_mac_dinh", "")
     goc = cau_hinh.get("url", "").rstrip("/")
-    baseurl = cau_hinh.get("baseurl", "") or ""
-    url_day_du = f"{goc}{baseurl}{url_trang}" if goc else f"{baseurl}{url_trang}"
-    anh_day_du = f"{goc}{baseurl}{anh}" if (goc and anh and not anh.startswith("http")) else anh
+    url_day_du = f"{goc}{url_trang}" if goc else url_trang
+    anh_day_du = f"{goc}{anh}" if (goc and anh and not anh.startswith("http")) else anh
 
     def esc(s):
         return html.escape(s or "", quote=True)
