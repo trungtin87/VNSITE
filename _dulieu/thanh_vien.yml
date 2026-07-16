@@ -1,8 +1,4 @@
 # _dulieu/thanh_vien.yml — Dữ liệu mẫu, dùng để demo tag {% moi x trong du_lieu.thanh_vien %}
-- ten: "Nguyễn Văn A"
+- ten: "Bùi Trung Tín"
   vai_tro: "Tác giả chính"
-  github: "https://github.com/nguyenvana"
-
-- ten: "Trần Thị B"
-  vai_tro: "Cộng tác viên"
-  github: "https://github.com/tranthib"
+  github: "https://github.com/trungtin87"

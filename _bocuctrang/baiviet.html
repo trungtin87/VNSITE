@@ -3,7 +3,7 @@
 <article class="bai-viet">
     <header class="dau-bai-viet">
         <p class="duong-dan-chuyen-muc">
-            <a href="{{ cau_hinh.baseurl }}/{{ bai_viet.chuyen_muc }}/">{{ bai_viet.chuyen_muc }}</a>
+            <a href="/{{ bai_viet.chuyen_muc }}/">{{ bai_viet.chuyen_muc }}</a>
         </p>
         <h1>{{ bai_viet.tieu_de }}</h1>
         <p class="meta-bai-viet">
@@ -12,7 +12,7 @@
         </p>
         <div class="danh-sach-tag">
             {% moi tag trong bai_viet.tags %}
-            <a class="the-tag" href="{{ cau_hinh.baseurl }}/tag/{{ tag }}/">#{{ tag }}</a>
+            <a class="the-tag" href="/tag/{{ tag }}/">#{{ tag }}</a>
             {% het %}
         </div>
     </header>
@@ -29,7 +29,7 @@
     <ul class="luoi-bai-viet">
         {% moi bai trong bai_lien_quan %}
         <li class="the-bai-viet">
-            <a href="{{ cau_hinh.baseurl }}{{ bai.url }}">{{ bai.tieu_de }}</a>
+            <a href="{{ bai.url }}">{{ bai.tieu_de }}</a>
             <div class="excerpt">{{ bai.excerpt }}</div>
         </li>
         {% het %}
