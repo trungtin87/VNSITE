@@ -80,18 +80,11 @@ def _doc_mot_du_an(duong_dan_file):
     fm, noi_dung_md = doc_front_matter(duong_dan_file)
     kiem_tra_truong_bat_buoc(fm, duong_dan_file, ["tieu_de", "mo_ta_ngan"])
     slug = lay_slug(fm, duong_dan_file)
-    cong_nghe = fm.get("cong_nghe", [])
-    # Ghi chú: bộ máy template (template.py) không hỗ trợ {% moi %} lồng nhau
-    # (regex non-greedy sẽ khớp nhầm {% het %} của vòng lặp bên trong), nên
-    # ở đây dựng sẵn chuỗi HTML <li> cho danh sách công nghệ, dùng trực tiếp
-    # bằng {{ du_an.cong_nghe_html }} thay vì lặp lồng trong vòng lặp dự án.
-    cong_nghe_html = "".join(f"<li>{c}</li>" for c in cong_nghe)
     return {
         "tieu_de": fm["tieu_de"],
         "mo_ta_ngan": fm["mo_ta_ngan"],
         "anh_dai_dien": fm.get("anh_dai_dien", ""),
-        "cong_nghe": cong_nghe,
-        "cong_nghe_html": cong_nghe_html,
+        "cong_nghe": fm.get("cong_nghe", []),
         "link_demo": fm.get("link_demo", ""),
         "link_github": fm.get("link_github", ""),
         "slug": slug,
@@ -117,30 +110,6 @@ def _lay_bai_lien_quan(bai_hien_tai, tat_ca_bai, so_luong=3):
     return [bai for _, bai in ung_vien[:so_luong]]
 
 
-_DUOI_BO_QUA_O_GOC = (".py", ".yml", ".yaml", ".md")
-_TEN_FILE_BO_QUA_O_GOC = {"requirements.txt"}
-
-
-def _sao_chep_file_tinh_o_goc(goc, dich):
-    """Sao chép các file tĩnh nằm thẳng ở gốc dự án (robots.txt, sitemap.xml,
-    rss.xml, manifest.webmanifest, favicon.svg, v.v.) sang gốc _ketqua/.
-    Đây là phần mở rộng nhỏ ngoài đặc tả gốc: engine chỉ copy tainguyen/ và
-    các trang .html có {% ke_thua %}, nhưng các file phục vụ tìm kiếm/PWA vẫn
-    cần nằm đúng ở gốc domain, không thể đặt trong tainguyen/.
-    """
-    for ten_file in os.listdir(goc):
-        duong_dan = os.path.join(goc, ten_file)
-        if not os.path.isfile(duong_dan):
-            continue
-        if ten_file.startswith("."):
-            continue
-        if ten_file.endswith(".html") or ten_file.endswith(_DUOI_BO_QUA_O_GOC):
-            continue
-        if ten_file in _TEN_FILE_BO_QUA_O_GOC:
-            continue
-        shutil.copy2(duong_dan, os.path.join(dich, ten_file))
-
-
 def _sao_chep_tainguyen(goc, dich):
     thu_muc_nguon = os.path.join(goc, "tainguyen")
     thu_muc_dich = os.path.join(dich, "tainguyen")
@@ -160,34 +129,6 @@ def _sao_chep_tainguyen(goc, dich):
                 with open(os.path.join(thu_muc_css, f), "r", encoding="utf-8") as fh:
                     noi_dung_gop.append(f"/* --- {f} --- */\n" + fh.read())
             _ghi_file(os.path.join(thu_muc_css, "main.css"), "\n\n".join(noi_dung_gop))
-
-
-def _sinh_chi_muc_tim_kiem(tat_ca_bai, thu_muc_output):
-    """Tự sinh tainguyen/js/search-data.js từ danh sách bài viết THẬT mỗi lần
-    build, để URL trong chỉ mục tìm kiếm không bao giờ bị lệch so với URL
-    thật của trang (lỗi thường gặp nếu để file này viết tay/copy thủ công).
-    """
-    import json as _json
-
-    muc = []
-    for bai in tat_ca_bai:
-        muc.append({
-            "title": bai["tieu_de"],
-            "url": bai["url"],
-            "category": bai.get("_fm", {}).get("danh_muc", bai.get("chuyen_muc", "")),
-            "desc": bai.get("mo_ta", ""),
-        })
-    noi_dung = (
-        "// Chỉ mục tìm kiếm — SINH TỰ ĐỘNG bởi vnsite_engine/builder.py "
-        "(_sinh_chi_muc_tim_kiem) mỗi lần build.\n"
-        "// KHÔNG chỉnh tay tệp này — hãy sửa front matter bài viết trong "
-        "_cacbaiviet/ rồi build lại.\n"
-        "export const searchIndex = " + _json.dumps(muc, ensure_ascii=False, indent=2) + ";\n"
-    )
-    duong_dan = os.path.join(thu_muc_output, "tainguyen", "js", "search-data.js")
-    os.makedirs(os.path.dirname(duong_dan), exist_ok=True)
-    with open(duong_dan, "w", encoding="utf-8") as f:
-        f.write(noi_dung)
 
 
 def build(duong_dan_goc: str, che_do_preview: bool = False, im_lang: bool = False):
@@ -258,6 +199,18 @@ def build(duong_dan_goc: str, che_do_preview: bool = False, im_lang: bool = Fals
     else:
         khoi_giscus = ""
 
+    # Giai đoạn 3 (tùy chọn): ô tìm kiếm phía client, chỉ sinh HTML nếu được bật
+    if (cau_hinh.get("tim_kiem") or {}).get("bat"):
+        khoi_tim_kiem = (
+            '<div hien-thi="khung-chua" class="hop-tim-kiem">'
+            '<input type="search" id="o-tim-kiem" placeholder="Tìm bài viết..." '
+            'aria-label="Tìm bài viết" autocomplete="off">'
+            '<ul id="ket-qua-tim-kiem" class="ket-qua-tim-kiem"></ul>'
+            '</div>'
+        )
+    else:
+        khoi_tim_kiem = ""
+
     ngu_canh_goc = {
         "cau_hinh": cau_hinh,
         "du_lieu": du_lieu,
@@ -266,6 +219,7 @@ def build(duong_dan_goc: str, che_do_preview: bool = False, im_lang: bool = Fals
         "tat_ca_du_an": tat_ca_du_an,
         "tat_ca_tag": tat_ca_tag,
         "khoi_giscus": khoi_giscus,
+        "khoi_tim_kiem": khoi_tim_kiem,
     }
 
     so_trang_da_sinh = 0
@@ -317,8 +271,34 @@ def build(duong_dan_goc: str, che_do_preview: bool = False, im_lang: bool = Fals
         so_trang_da_sinh += 1
     log(f"✓ Đã sinh {len(tat_ca_tag)} trang tag")
 
+    # ---------- 6b. Trang liệt kê /bai-viet/ và /du-an/ (khớp với menu điều hướng) ----------
+    ngu_canh = dict(ngu_canh_goc)
+    ngu_canh["danh_sach_bai_viet"] = tat_ca_bai
+    ngu_canh["danh_sach_du_an"] = []
+    ngu_canh["tieu_de_liet_ke"] = "Tất cả bài viết"
+    ngu_canh["noi_dung_trang"] = ""
+    ngu_canh["tieu_de_trang"] = f'Bài viết — {cau_hinh["ten_trangweb"]}'
+    ngu_canh["the_seo"] = sinh_the_seo(cau_hinh, "Bài viết", cau_hinh["mo_ta"], "/bai-viet/")
+    html = engine.render_trang(duong_dan_layout_trangweb, ngu_canh)
+    _ghi_file(os.path.join(thu_muc_output, "bai-viet", "index.html"), html)
+    so_trang_da_sinh += 1
+
+    ngu_canh = dict(ngu_canh_goc)
+    ngu_canh["danh_sach_bai_viet"] = []
+    ngu_canh["danh_sach_du_an"] = tat_ca_du_an
+    ngu_canh["tieu_de_liet_ke"] = "Dự án"
+    ngu_canh["noi_dung_trang"] = ""
+    ngu_canh["tieu_de_trang"] = f'Dự án — {cau_hinh["ten_trangweb"]}'
+    ngu_canh["the_seo"] = sinh_the_seo(cau_hinh, "Dự án", cau_hinh["mo_ta"], "/du-an/")
+    html = engine.render_trang(duong_dan_layout_trangweb, ngu_canh)
+    _ghi_file(os.path.join(thu_muc_output, "du-an", "index.html"), html)
+    so_trang_da_sinh += 1
+    log("✓ Đã sinh trang liệt kê /bai-viet/ và /du-an/")
+
     # ---------- 7. Trang tĩnh trong gốc dự án (index.html người dùng tự viết, v.v.) ----------
     # Bất kỳ file .html ở gốc dự án dùng {% ke_thua %} sẽ được coi là 1 "trang tĩnh".
+    # "index.html" giữ nguyên ở gốc (URL "/"); các file khác xuất thành ten/index.html
+    # để khớp với URL có dấu "/" ở cuối (ví dụ "/gioi-thieu/" trong _cauhinhtrangweb.yml).
     for ten_file in os.listdir(duong_dan_goc):
         if ten_file.endswith(".html"):
             duong_dan_file = os.path.join(duong_dan_goc, ten_file)
@@ -329,13 +309,36 @@ def build(duong_dan_goc: str, che_do_preview: bool = False, im_lang: bool = Fals
             ngu_canh["tieu_de_trang"] = cau_hinh["ten_trangweb"]
             ngu_canh["the_seo"] = sinh_the_seo(cau_hinh, cau_hinh["ten_trangweb"], cau_hinh["mo_ta"], "/")
             html = engine.render_trang(duong_dan_file, ngu_canh)
-            _ghi_file(os.path.join(thu_muc_output, ten_file), html)
+
+            if ten_file == "index.html":
+                duong_dan_ra = os.path.join(thu_muc_output, "index.html")
+            else:
+                ten_khong_duoi = os.path.splitext(ten_file)[0]
+                duong_dan_ra = os.path.join(thu_muc_output, ten_khong_duoi, "index.html")
+
+            _ghi_file(duong_dan_ra, html)
             so_trang_da_sinh += 1
 
     # ---------- 8. Sao chép tài nguyên tĩnh (css/js/hình ảnh) ----------
     _sao_chep_tainguyen(duong_dan_goc, thu_muc_output)
-    _sao_chep_file_tinh_o_goc(duong_dan_goc, thu_muc_output)
-    _sinh_chi_muc_tim_kiem(tat_ca_bai, thu_muc_output)
+
+    # ---------- 8b. Tìm kiếm phía client: sinh search-index.json (mục VI, 🟢 tùy chọn) ----------
+    if (cau_hinh.get("tim_kiem") or {}).get("bat"):
+        import json
+        chi_muc = [
+            {
+                "tieu_de": b["tieu_de"],
+                "url": b["url"],
+                "van_ban": excerpt_thanh_text(b["excerpt"]),
+                "tags": b["tags"],
+            }
+            for b in tat_ca_bai
+        ]
+        _ghi_file(
+            os.path.join(thu_muc_output, "search-index.json"),
+            json.dumps(chi_muc, ensure_ascii=False),
+        )
+        log(f"✓ Đã sinh search-index.json ({len(chi_muc)} bài viết)")
 
     # ---------- 9. File hỗ trợ GitHub Pages ----------
     _ghi_file(os.path.join(thu_muc_output, ".nojekyll"), "")

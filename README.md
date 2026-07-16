@@ -41,13 +41,13 @@ _ketqua/                 (sinh ra khi build) — kết quả HTML tĩnh cuối c
 
 ## Cú pháp template
 
-| Tag                                           | Ý nghĩa                                            |
-| --------------------------------------------- | ---------------------------------------------------- |
-| `{% ke_thua "trangmacdinh.html" %}`         | Kế thừa 1 layout cha (đặt ở dòng đầu file)   |
-| `{% khoi ten %} ... {% end %}`              | Vùng nội dung có thể ghi đè khi kế thừa      |
-| `{% nhung "ten_component.html" %}`          | Nhúng 1 thành phần từ`_thanhphantrang/`        |
-| `{% moi x trong duong.dan %} ... {% het %}` | Lặp qua 1 danh sách trong ngữ cảnh (context)     |
-| `{{ ten_bien }}` / `{{ x.thuoc_tinh }}`   | Chèn giá trị biến, hỗ trợ truy cập lồng nhau |
+| Tag | Ý nghĩa |
+|---|---|
+| `{% ke_thua "trangmacdinh.html" %}` | Kế thừa 1 layout cha (đặt ở dòng đầu file) |
+| `{% khoi ten %} ... {% end %}` | Vùng nội dung có thể ghi đè khi kế thừa |
+| `{% nhung "ten_component.html" %}` | Nhúng 1 thành phần từ `_thanhphantrang/` |
+| `{% moi x trong duong.dan %} ... {% het %}` | Lặp qua 1 danh sách trong ngữ cảnh (context) |
+| `{{ ten_bien }}` / `{{ x.thuoc_tinh }}` | Chèn giá trị biến, hỗ trợ truy cập lồng nhau |
 
 Bóc tách `<style>` trong mỗi component được cache trong bộ nhớ và chỉ chèn
 1 lần vào `<head>` mỗi trang — không bị lặp `<style>` dù nhúng nhiều lần.
