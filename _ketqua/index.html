@@ -1,115 +1,434 @@
 <!DOCTYPE html>
-<html lang="vi" data-theme="light">
+<html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Blog của tôi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Một blog cá nhân tạo bằng VNSITE — trình tạo website tĩnh cho người Việt">
+    <link rel="icon" href="/VNSITE/tainguyen/hinhanh/favicon.png">
+
+    <!-- CSS Agency (Bootstrap + theme, đã gộp thành 1 file tĩnh) -->
+    <link rel="stylesheet" href="/VNSITE/tainguyen/css/agency/agency.css">
+    <link rel="stylesheet" href="/VNSITE/tainguyen/css/agency/font-awesome/css/font-awesome.min.css">
+
+    <!-- Font ngoài (giữ nguyên như bản gốc Agency) -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css">
+
     <meta property="og:title" content="Blog của tôi">
     <meta property="og:description" content="Một blog cá nhân tạo bằng VNSITE — trình tạo website tĩnh cho người Việt">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://trungtin87.github.io/">
-    <meta property="og:image" content="https://trungtin87.github.io/tainguyen/hinhanh/og-mac-dinh.png">
+    <meta property="og:url" content="https://trungtin87.github.io/VNSITE/">
+    <meta property="og:image" content="https://trungtin87.github.io/VNSITE/tainguyen/hinhanh/og-mac-dinh.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Blog của tôi">
     <meta name="twitter:description" content="Một blog cá nhân tạo bằng VNSITE — trình tạo website tĩnh cho người Việt">
-    <meta name="twitter:image" content="https://trungtin87.github.io/tainguyen/hinhanh/og-mac-dinh.png">
-    <link rel="icon" href="/VNSITE/tainguyen/hinhanh/favicon.png">
-    <link rel="stylesheet" href="/VNSITE/tainguyen/css/vnstyle.css">
-    <link rel="stylesheet" href="/VNSITE/tainguyen/css/main.css">
-</head>
-<body>
-    <header hien-thi="khung-chua" class="phan-dau-trang">
-    <a class="ten-trang" href="/VNSITE/">Blog của tôi</a>
-    <button id="nut-doi-che-do" type="button" aria-label="Chuyển chế độ sáng/tối" title="Chuyển chế độ sáng/tối">
-        <span class="bieu-tuong-che-do">🌙</span>
-    </button>
-</header>
+    <meta name="twitter:image" content="https://trungtin87.github.io/VNSITE/tainguyen/hinhanh/og-mac-dinh.png">
+<style>
+.navbar-fixed-top.vn-nav-don { background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,.08); }
 
-    
-    <nav hien-thi="khung-chua" class="thanh-dieu-huong">
-    <ul>
-        
-        <li><a href="/VNSITE/">Trang chủ</a></li>
-        
-        <li><a href="/VNSITE/bai-viet/">Bài viết</a></li>
-        
-        <li><a href="/VNSITE/du-an/">Dự án</a></li>
-        
-        <li><a href="/VNSITE/gioi-thieu/">Giới thiệu</a></li>
-        
-        <li><a href="/VNSITE/cv/">CV</a></li>
-        
-    </ul>
+.vn-anh-thay-the {
+    height: 200px; display: flex; align-items: center; justify-content: center;
+    background: #fed136; color: #333; font-weight: bold; text-align: center; padding: 1rem;
+}
+</style>
+</head>
+<body id="page-top" class="index">
+
+
+<!-- Nav -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#vn-nav-agency">
+                <span class="sr-only">Bật/tắt menu</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand page-scroll" href="#page-top">Blog của tôi</a>
+        </div>
+        <div class="collapse navbar-collapse" id="vn-nav-agency">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="hidden"><a href="#page-top"></a></li>
+                <li><a class="page-scroll" href="#dich-vu">Dịch vụ</a></li>
+                <li><a class="page-scroll" href="#du-an">Dự án</a></li>
+                <li><a class="page-scroll" href="#gioi-thieu">Giới thiệu</a></li>
+                <li><a class="page-scroll" href="#doi-ngu">Đội ngũ</a></li>
+                <li><a class="page-scroll" href="#lien-he">Liên hệ</a></li>
+            </ul>
+        </div>
+    </div>
 </nav>
 
+<!-- Header -->
+<header>
+    <div class="container">
+        <div class="intro-text">
+            <div class="intro-lead-in">Chào mừng đến với studio của chúng tôi!</div>
+            <div class="intro-heading">Rất vui được gặp bạn</div>
+            <a href="#dich-vu" class="page-scroll btn btn-xl">Xem thêm</a>
+        </div>
+    </div>
+</header>
 
-    <main hien-thi="khung-chua" class="noi-dung-chinh">
-        
-<section class="trang-chu-mo-dau">
-    <h1>Blog của tôi</h1>
-    <p>Một blog cá nhân tạo bằng VNSITE — trình tạo website tĩnh cho người Việt</p>
-</section>
-
-<section>
-    <h2>Bài viết mới nhất</h2>
-    <ul class="luoi-bai-viet">
-        
-        <li class="the-bai-viet">
-            <a href="/lap-trinh/2026/07/huong-dan-dung-vnsite-cho-nguoi-viet/"><h3>Hướng dẫn dùng VNSITE cho người Việt</h3></a>
-            <p class="meta-bai-viet"><time>2026-07-13</time> · 1 phút đọc</p>
-            <div class="excerpt"><p>Jekyll là một trong những trình tạo website tĩnh phổ biến nhất, đặc biệt vì được
-GitHub Pages hỗ trợ sẵn. Tuy nhiên, với người dùng Việt Nam, Jekyll có vài điểm
-bất tiện: cú pháp Liquid tiếng Anh, phụ thuộc Ruby, và không tối ưu cho nội dung
-tiếng Việt (slug, dấu, bộ gõ).</p></div>
-        </li>
-        
-        <li class="the-bai-viet">
-            <a href="/lap-trinh/2026/07/tai-sao-chon-python-lam-cong-cu-tao-web-tinh/"><h3>Tại sao chọn Python làm công cụ tạo web tĩnh</h3></a>
-            <p class="meta-bai-viet"><time>2026-07-10</time> · 1 phút đọc</p>
-            <div class="excerpt"><p>Có rất nhiều trình tạo website tĩnh trên thị trường: Jekyll (Ruby), Hugo (Go),
-Next.js/Gatsby (Node.js)... Vậy tại sao VNSITE lại chọn Python?</p></div>
-        </li>
-        
-    </ul>
-</section>
-
-<section>
-    <h2>Dự án nổi bật</h2>
-    <div class="luoi-du-an">
-        
-        <a class="the-du-an" href="/du-an/vnlang/">
-            <img src="/tainguyen/hinhanh/du-an-vnlang.png" alt="VNLang" loading="lazy">
-            <h3>VNLang</h3>
-            <p>Ngôn ngữ lập trình dùng từ khóa tiếng Việt, kèm bộ công cụ biên dịch đầy đủ.</p>
-        </a>
-        
+<!-- Dịch vụ -->
+<section id="dich-vu">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">Dịch vụ</h2>
+                <h3 class="section-subheading text-muted">Những gì chúng tôi cung cấp.</h3>
+            </div>
+        </div>
+        <div class="row text-center">
+            
+            <div class="col-md-4">
+                <span class="fa-stack fa-4x">
+                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                    <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="service-heading">Thiết kế web</h4>
+                <p class="text-muted">Xây dựng giao diện đẹp, responsive trên mọi thiết bị.</p>
+            </div>
+            
+            <div class="col-md-4">
+                <span class="fa-stack fa-4x">
+                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                    <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="service-heading">Thương mại điện tử</h4>
+                <p class="text-muted">Giải pháp bán hàng trực tuyến trọn gói.</p>
+            </div>
+            
+            <div class="col-md-4">
+                <span class="fa-stack fa-4x">
+                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                    <i class="fa fa-lock fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="service-heading">Bảo mật</h4>
+                <p class="text-muted">Rà soát và củng cố an toàn thông tin cho website.</p>
+            </div>
+            
+        </div>
     </div>
 </section>
 
-<section>
-    <h2>Thành viên đóng góp</h2>
-    <ul>
-        
-        <li><a href="https://github.com/trungtin87">Bùi Trung Tín</a> — Tác giả chính</li>
-        
-    </ul>
+<!-- Dự án (thay cho modal của bản Jekyll gốc: mỗi dự án có trang riêng /du-an/slug/) -->
+
+<section id="du-an" class="bg-light-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">Dự án</h2>
+                <h3 class="section-subheading text-muted">Một số sản phẩm tiêu biểu.</h3>
+            </div>
+        </div>
+        <div class="row">
+            
+            <div class="col-md-4 col-sm-6 portfolio-item">
+                <a href="/VNSITE/du-an/dreams/" class="portfolio-link">
+                    <div class="portfolio-hover">
+                        <div class="portfolio-hover-content">
+                            <i class="fa fa-plus fa-3x"></i>
+                        </div>
+                    </div>
+                    
+                    <img src="/VNSITE/tainguyen/hinhanh/agency/portfolio/dreams-thumbnail.png" class="img-responsive img-centered" alt="Dreams">
+                    
+                </a>
+                <div class="portfolio-caption">
+                    <h4>Dreams</h4>
+                    <p class="text-muted">Website Design</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4 col-sm-6 portfolio-item">
+                <a href="/VNSITE/du-an/escape/" class="portfolio-link">
+                    <div class="portfolio-hover">
+                        <div class="portfolio-hover-content">
+                            <i class="fa fa-plus fa-3x"></i>
+                        </div>
+                    </div>
+                    
+                    <img src="/VNSITE/tainguyen/hinhanh/agency/portfolio/escape-thumbnail.png" class="img-responsive img-centered" alt="Escape">
+                    
+                </a>
+                <div class="portfolio-caption">
+                    <h4>Escape</h4>
+                    <p class="text-muted">Website Design</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4 col-sm-6 portfolio-item">
+                <a href="/VNSITE/du-an/golden/" class="portfolio-link">
+                    <div class="portfolio-hover">
+                        <div class="portfolio-hover-content">
+                            <i class="fa fa-plus fa-3x"></i>
+                        </div>
+                    </div>
+                    
+                    <img src="/VNSITE/tainguyen/hinhanh/agency/portfolio/golden-thumbnail.png" class="img-responsive img-centered" alt="Golden">
+                    
+                </a>
+                <div class="portfolio-caption">
+                    <h4>Golden</h4>
+                    <p class="text-muted">Website Design</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4 col-sm-6 portfolio-item">
+                <a href="/VNSITE/du-an/round-icons/" class="portfolio-link">
+                    <div class="portfolio-hover">
+                        <div class="portfolio-hover-content">
+                            <i class="fa fa-plus fa-3x"></i>
+                        </div>
+                    </div>
+                    
+                    <img src="/VNSITE/tainguyen/hinhanh/agency/portfolio/roundicons-thumbnail.png" class="img-responsive img-centered" alt="Round Icons">
+                    
+                </a>
+                <div class="portfolio-caption">
+                    <h4>Round Icons</h4>
+                    <p class="text-muted">Graphic Design</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4 col-sm-6 portfolio-item">
+                <a href="/VNSITE/du-an/startup-framework/" class="portfolio-link">
+                    <div class="portfolio-hover">
+                        <div class="portfolio-hover-content">
+                            <i class="fa fa-plus fa-3x"></i>
+                        </div>
+                    </div>
+                    
+                    <img src="/VNSITE/tainguyen/hinhanh/agency/portfolio/startup-framework-thumbnail.png" class="img-responsive img-centered" alt="Startup Framework">
+                    
+                </a>
+                <div class="portfolio-caption">
+                    <h4>Startup Framework</h4>
+                    <p class="text-muted">Website Design</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4 col-sm-6 portfolio-item">
+                <a href="/VNSITE/du-an/treehouse/" class="portfolio-link">
+                    <div class="portfolio-hover">
+                        <div class="portfolio-hover-content">
+                            <i class="fa fa-plus fa-3x"></i>
+                        </div>
+                    </div>
+                    
+                    <img src="/VNSITE/tainguyen/hinhanh/agency/portfolio/treehouse-thumbnail.png" class="img-responsive img-centered" alt="Treehouse">
+                    
+                </a>
+                <div class="portfolio-caption">
+                    <h4>Treehouse</h4>
+                    <p class="text-muted">Website Design</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
 </section>
 
-    </main>
+<!-- Giới thiệu -->
+<section id="gioi-thieu">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">Giới thiệu</h2>
+                <h3 class="section-subheading text-muted">Hành trình của chúng tôi.</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="timeline">
+                    
+                    <li>
+                        <div class="timeline-image">
+                            <img class="img-circle img-responsive" src="/VNSITE/tainguyen/hinhanh/agency/about/1.jpg" alt="Những ngày đầu">
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4>2022</h4>
+                                <h4 class="subheading">Những ngày đầu</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p class="text-muted">Bắt đầu với một đội ngũ nhỏ và niềm đam mê xây dựng sản phẩm chất lượng.</p>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li>
+                        <div class="timeline-image">
+                            <img class="img-circle img-responsive" src="/VNSITE/tainguyen/hinhanh/agency/about/2.jpg" alt="Mở rộng dịch vụ">
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4>2023</h4>
+                                <h4 class="subheading">Mở rộng dịch vụ</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p class="text-muted">Bổ sung thêm mảng thương mại điện tử và bảo mật web.</p>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li>
+                        <div class="timeline-image">
+                            <img class="img-circle img-responsive" src="/VNSITE/tainguyen/hinhanh/agency/about/3.jpg" alt="Đội ngũ trưởng thành">
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4>2024</h4>
+                                <h4 class="subheading">Đội ngũ trưởng thành</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p class="text-muted">Quy mô đội ngũ tăng gấp đôi, phục vụ khách hàng trong và ngoài nước.</p>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li class="timeline-inverted">
+                        <div class="timeline-image">
+                            <h4>Cùng<br>viết tiếp<br>câu chuyện!</h4>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <footer hien-thi="khung-chua" class="phan-chan-trang">
-    <p>© Bùi Trung Tín — Tạo bằng <strong>VNSITE</strong></p>
-    <div class="lien-ket-mang-xa-hoi">
-        <a href="https://github.com/trungtin87">GitHub</a>
+<!-- Đội ngũ -->
+<section id="doi-ngu" class="bg-light-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">Đội ngũ</h2>
+                <h3 class="section-subheading text-muted">Những người đứng sau sản phẩm.</h3>
+            </div>
+        </div>
+        <div class="row">
+            
+            <div class="col-sm-4">
+                <div class="team-member">
+                    <img src="/VNSITE/tainguyen/hinhanh/agency/team/1.jpg" class="img-responsive img-circle" alt="Nguyễn Văn A">
+                    <h4>Nguyễn Văn A</h4>
+                    <p class="text-muted">Trưởng nhóm thiết kế</p>
+                    <ul class="list-inline social-buttons">
+                        
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-sm-4">
+                <div class="team-member">
+                    <img src="/VNSITE/tainguyen/hinhanh/agency/team/2.jpg" class="img-responsive img-circle" alt="Trần Thị B">
+                    <h4>Trần Thị B</h4>
+                    <p class="text-muted">Trưởng nhóm marketing</p>
+                    <ul class="list-inline social-buttons">
+                        
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-sm-4">
+                <div class="team-member">
+                    <img src="/VNSITE/tainguyen/hinhanh/agency/team/3.jpg" class="img-responsive img-circle" alt="Lê Văn C">
+                    <h4>Lê Văn C</h4>
+                    <p class="text-muted">Trưởng nhóm phát triển</p>
+                    <ul class="list-inline social-buttons">
+                        
+                        <li><a href="#"><i class="fa fa-github"></i></a></li>
+                        
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+<!-- Khách hàng -->
+<aside class="clients">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-md-3 col-sm-6">
+                <a href="#">
+                    <img src="/VNSITE/tainguyen/hinhanh/agency/logos/envato.jpg" class="img-responsive img-centered" alt="Envato">
+                </a>
+            </div>
+            
+            <div class="col-md-3 col-sm-6">
+                <a href="#">
+                    <img src="/VNSITE/tainguyen/hinhanh/agency/logos/designmodo.jpg" class="img-responsive img-centered" alt="Designmodo">
+                </a>
+            </div>
+            
+            <div class="col-md-3 col-sm-6">
+                <a href="#">
+                    <img src="/VNSITE/tainguyen/hinhanh/agency/logos/themeforest.jpg" class="img-responsive img-centered" alt="ThemeForest">
+                </a>
+            </div>
+            
+            <div class="col-md-3 col-sm-6">
+                <a href="#">
+                    <img src="/VNSITE/tainguyen/hinhanh/agency/logos/creative-market.jpg" class="img-responsive img-centered" alt="Creative Market">
+                </a>
+            </div>
+            
+        </div>
+    </div>
+</aside>
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <span class="copyright">Bản quyền &copy; Blog của tôi</span>
+            </div>
+            <div class="col-md-4">
+                <ul class="list-inline social-buttons">
+                    
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <ul class="list-inline quicklinks">
+                    <li><a href="/VNSITE/">Trang chủ</a></li>
+                    <li><a href="/VNSITE/du-an/">Dự án</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </footer>
 
 
-    <script>window.VNSITE_BASEURL = "/VNSITE";</script>
-    <script src="/VNSITE/tainguyen/js/che-do-toi-sang.js"></script>
-    <script src="/VNSITE/tainguyen/js/muc-luc.js"></script>
-    <script src="/VNSITE/tainguyen/js/sao-chep-code.js"></script>
-    <script src="/VNSITE/tainguyen/js/tim-kiem.js"></script>
+
+<script src="/VNSITE/tainguyen/js/agency/jquery-1.11.0.js"></script>
+<script src="/VNSITE/tainguyen/js/agency/bootstrap.min.js"></script>
+<script src="/VNSITE/tainguyen/js/agency/jquery.easing.min.js"></script>
+<script src="/VNSITE/tainguyen/js/agency/classie.js"></script>
+<script src="/VNSITE/tainguyen/js/agency/cbpAnimatedHeader.js"></script>
+<script src="/VNSITE/tainguyen/js/agency/agency.js"></script>
+
 </body>
 </html>

@@ -7,6 +7,7 @@ Cú pháp hỗ trợ:
   {% khoi ten_khoi %} ... {% end %}    -> vùng nội dung có thể ghi đè (dùng ở cả cha lẫn con)
   {% nhung "ten_component.html" %}     -> nhúng 1 thành phần từ _thanhphantrang/
   {% moi x trong duong.dan %} ... {% het %}   -> lặp qua danh sách trong context
+  {% neu duong.dan %} ... {% khac %} ... {% hetneu %}  -> điều kiện (khac tùy chọn)
   {{ ten_bien }} / {{ x.thuoc_tinh }}  -> chèn giá trị biến
 
 Thứ tự xử lý cho MỖI trang (đúng mục II.1 và II.2 của đặc tả):
@@ -25,9 +26,15 @@ from .loi import LoiIncludeKhongTonTai, LoiLayoutKhongTonTai
 _RE_KE_THUA = re.compile(r'{%\s*ke_thua\s+"([^"]+)"\s*%}\s*\n?')
 _RE_KHOI = re.compile(r'{%\s*khoi\s+(\w+)\s*%}(.*?){%\s*end\s*%}', re.DOTALL)
 _RE_NHUNG = re.compile(r'{%\s*nhung\s+"([^"]+)"\s*%}')
-_RE_MOI = re.compile(
-    r'{%\s*moi\s+(\w+)\s+trong\s+([\w.]+)\s*%}(.*?){%\s*het\s*%}', re.DOTALL
-)
+
+# Vòng lặp: {% moi x trong duong.dan %} ... {% het %}  (hỗ trợ lồng nhau)
+_RE_MOI_MO = re.compile(r'{%\s*moi\s+(\w+)\s+trong\s+([\w.]+)\s*%}')
+_RE_HET = re.compile(r'{%\s*het\s*%}')
+
+# Điều kiện: {% neu duong.dan %} ... {% khac %} ... {% hetneu %}  (hỗ trợ lồng nhau)
+_RE_NEU_MO = re.compile(r'{%\s*neu\s+([\w.]+)\s*%}')
+_RE_HETNEU = re.compile(r'{%\s*hetneu\s*%}')
+_RE_MOC_DIEU_KIEN = re.compile(r'{%\s*neu\s+[\w.]+\s*%}|{%\s*hetneu\s*%}|{%\s*khac\s*%}')
 _RE_BIEN = re.compile(r'{{\s*([\w.]+)\s*}}')
 _RE_STYLE = re.compile(r'<style[^>]*>(.*?)</style>', re.DOTALL | re.IGNORECASE)
 
@@ -131,19 +138,97 @@ class BoMayTemplate:
                 return None
         return gia_tri
 
+    # ----------------------------------------------------------------- #
+    # Hàm dùng chung: tìm thân khối tính từ vi_tri_bat_dau, khớp đúng cặp
+    # mở/đóng kể cả khi lồng nhiều lớp cùng loại tag (đếm độ sâu thay vì
+    # regex "không tham lam" — regex đơn thuần sẽ bắt nhầm thẻ đóng gần
+    # nhất, vốn có thể thuộc về 1 khối con lồng bên trong).
+    # Trả về (than_khoi, vi_tri_ngay_sau_the_dong_tuong_ung).
+    # ----------------------------------------------------------------- #
+    @staticmethod
+    def _tim_than_can_bang(html: str, vi_tri_bat_dau: int, re_mo, re_dong):
+        do_sau = 1
+        vi_tri = vi_tri_bat_dau
+        while True:
+            m_mo = re_mo.search(html, vi_tri)
+            m_dong = re_dong.search(html, vi_tri)
+            if not m_dong:
+                # thiếu thẻ đóng -> coi như khối kéo dài tới hết chuỗi
+                return html[vi_tri_bat_dau:], len(html)
+            if m_mo and m_mo.start() < m_dong.start():
+                do_sau += 1
+                vi_tri = m_mo.end()
+            else:
+                do_sau -= 1
+                vi_tri = m_dong.end()
+                if do_sau == 0:
+                    return html[vi_tri_bat_dau:m_dong.start()], vi_tri
+
+    # ----------------------------------------------------------------- #
+    # Bước 3: vòng lặp {% moi x trong duong.dan %} ... {% het %}
+    # Hỗ trợ lồng nhau nhiều lớp (moi trong moi).
+    # ----------------------------------------------------------------- #
     def _xu_ly_vong_lap(self, html: str, context: dict) -> str:
-        def _thay(m):
-            ten_bien, duong_dan, than_vong_lap = m.group(1), m.group(2), m.group(3)
+        ket_qua = []
+        i = 0
+        while True:
+            m = _RE_MOI_MO.search(html, i)
+            if not m:
+                ket_qua.append(html[i:])
+                break
+            ket_qua.append(html[i:m.start()])
+            ten_bien, duong_dan = m.group(1), m.group(2)
+            than_vong_lap, vi_tri_sau = self._tim_than_can_bang(html, m.end(), _RE_MOI_MO, _RE_HET)
             danh_sach = self._lay_theo_duong_dan(context, duong_dan) or []
-            ket_qua = []
             for phan_tu in danh_sach:
                 ngu_canh_con = dict(context)
                 ngu_canh_con[ten_bien] = phan_tu
-                # Cho phép vòng lặp lồng nhau: xử lý đệ quy thân vòng lặp trước
+                # Xử lý đệ quy: vòng lặp con trước, rồi điều kiện, rồi mới thay biến
                 than_da_lap = self._xu_ly_vong_lap(than_vong_lap, ngu_canh_con)
+                than_da_lap = self._xu_ly_dieu_kien(than_da_lap, ngu_canh_con)
                 ket_qua.append(self._thay_bien(than_da_lap, ngu_canh_con))
-            return "".join(ket_qua)
-        return _RE_MOI.sub(_thay, html)
+            i = vi_tri_sau
+        return "".join(ket_qua)
+
+    # ----------------------------------------------------------------- #
+    # Bước 3b: điều kiện {% neu %}...{% khac %}...{% hetneu %}
+    # Dùng closing tag riêng "hetneu" (khác "het" của vòng lặp moi) để
+    # 2 loại tag không bao giờ lẫn "het" của nhau khi lồng vào nhau.
+    # Hỗ trợ lồng nhau nhiều lớp (neu trong neu, neu trong moi, moi trong neu).
+    # Giá trị được coi là "đúng" theo quy tắc Python: None/""/[]/0/False -> sai.
+    # ----------------------------------------------------------------- #
+    def _xu_ly_dieu_kien(self, html: str, context: dict) -> str:
+        ket_qua = []
+        i = 0
+        while True:
+            m = _RE_NEU_MO.search(html, i)
+            if not m:
+                ket_qua.append(html[i:])
+                break
+            ket_qua.append(html[i:m.start()])
+            duong_dan = m.group(1)
+            than, vi_tri_sau = self._tim_than_can_bang(html, m.end(), _RE_NEU_MO, _RE_HETNEU)
+            phan_dung, phan_sai = self._tach_khac_cung_cap(than)
+            gia_tri = self._lay_theo_duong_dan(context, duong_dan)
+            da_chon = phan_dung if gia_tri else phan_sai
+            ket_qua.append(self._xu_ly_dieu_kien(da_chon, context))
+            i = vi_tri_sau
+        return "".join(ket_qua)
+
+    @staticmethod
+    def _tach_khac_cung_cap(than: str):
+        """Tách {% khac %} ở đúng cấp ngoài cùng của khối (bỏ qua khac
+        thuộc về neu con lồng bên trong)."""
+        do_sau = 0
+        for m in _RE_MOC_DIEU_KIEN.finditer(than):
+            tag = m.group(0)
+            if re.match(r'{%\s*neu\s+', tag):
+                do_sau += 1
+            elif re.match(r'{%\s*hetneu\s*%}', tag):
+                do_sau -= 1
+            elif do_sau == 0:  # {% khac %} ở cấp ngoài cùng
+                return than[:m.start()], than[m.end():]
+        return than, ""
 
     # ----------------------------------------------------------------- #
     # Bước 4: thay biến
@@ -179,6 +264,7 @@ class BoMayTemplate:
         html = self._giai_quyet_ke_thua(duong_dan_file_layout)
         html = self._xu_ly_nhung(html, file_goi=duong_dan_file_layout)
         html = self._xu_ly_vong_lap(html, context)
+        html = self._xu_ly_dieu_kien(html, context)
         html = self._thay_bien(html, context)
         html = self._chen_css_da_gom(html, list(self._cache_css.keys()))
         return html

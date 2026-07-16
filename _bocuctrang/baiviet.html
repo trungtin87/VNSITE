@@ -11,8 +11,8 @@
             · {{ bai_viet.thoi_gian_doc }} phút đọc
         </p>
         <div class="danh-sach-tag">
-            {% moi tag trong bai_viet.tags %}
-            <a class="the-tag" href="{{ cau_hinh.baseurl }}/tag/{{ tag }}/">#{{ tag }}</a>
+            {% moi tag trong bai_viet.the_tag %}
+            <a class="the-tag" href="{{ cau_hinh.baseurl }}/tag/{{ tag.slug }}/">#{{ tag.ten }}</a>
             {% het %}
         </div>
     </header>

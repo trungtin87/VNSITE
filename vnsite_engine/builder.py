@@ -45,6 +45,10 @@ def _doc_mot_bai_viet(duong_dan_file, cau_hinh):
     tags = fm.get("tags") or fm.get("the") or []
     if isinstance(tags, str):
         tags = [t.strip() for t in tags.split(",") if t.strip()]
+    # the_tag: dùng cho template — "ten" để hiển thị (giữ dấu/hoa như người viết gõ),
+    # "slug" để làm URL /tag/slug/ (không dấu, không hoa, không khoảng trắng)
+    # -> click vào tag không còn bị lỗi "không tìm thấy" khi tag có dấu/khoảng trắng/viết hoa.
+    the_tag = [{"ten": t, "slug": chuyen_thanh_slug(t)} for t in tags]
 
     noi_dung_html = render_markdown(noi_dung_md)
     excerpt = tinh_excerpt(noi_dung_md, cau_hinh["so_tu_tomtat_mac_dinh"])
@@ -61,6 +65,7 @@ def _doc_mot_bai_viet(duong_dan_file, cau_hinh):
         "chuyen_muc": chuyen_muc,
         "slug": slug,
         "tags": tags,
+        "the_tag": the_tag,
         "noi_dung": noi_dung_html,
         "excerpt": excerpt,
         "thoi_gian_doc": thoi_gian_doc,
@@ -87,6 +92,10 @@ def _doc_mot_du_an(duong_dan_file):
         "cong_nghe": fm.get("cong_nghe", []),
         "link_demo": fm.get("link_demo", ""),
         "link_github": fm.get("link_github", ""),
+        "khach_hang": fm.get("khach_hang", ""),
+        "danh_muc": fm.get("danh_muc", ""),
+        "ngay_du_an": fm.get("ngay_du_an", ""),
+        "layout": fm.get("layout", "trangweb.html"),
         "slug": slug,
         "url": f"/du-an/{slug}/",
         "noi_dung": render_markdown(noi_dung_md),
@@ -181,7 +190,14 @@ def build(duong_dan_goc: str, che_do_preview: bool = False, im_lang: bool = Fals
                 tat_ca_du_an.append(_doc_mot_du_an(os.path.join(thu_muc_du_an, ten_file)))
 
     # ---------- 3. Danh sách tag ----------
-    tat_ca_tag = sorted({tag for bai in tat_ca_bai for tag in bai["tags"]})
+    # Gom theo SLUG (không dấu/không hoa/không khoảng trắng) để nhiều cách viết
+    # cùng 1 tag (vd "Python" và "python") không tạo ra 2 trang tag khác nhau,
+    # và để URL /tag/.../ luôn hợp lệ dù tag gốc có dấu tiếng Việt.
+    nhan_tag = {}  # slug -> tên hiển thị gốc (giữ lần xuất hiện đầu tiên)
+    for bai in tat_ca_bai:
+        for t in bai["tags"]:
+            nhan_tag.setdefault(chuyen_thanh_slug(t), t)
+    tat_ca_tag = sorted(nhan_tag.keys())
 
     # Giai đoạn 3 (tùy chọn): khung bình luận giscus, chỉ sinh HTML nếu được bật trong cấu hình
     giscus_cfg = cau_hinh.get("giscus", {}) or {}
@@ -251,23 +267,27 @@ def build(duong_dan_goc: str, che_do_preview: bool = False, im_lang: bool = Fals
         )
         ngu_canh["tieu_de_trang"] = f'{du_an["tieu_de"]} — {cau_hinh["ten_trangweb"]}'
         ngu_canh["the_seo"] = sinh_the_seo(cau_hinh, du_an["tieu_de"], du_an["mo_ta_ngan"], du_an["url"])
-        html = engine.render_trang(duong_dan_layout_trangweb, ngu_canh)
+        # Mỗi dự án có thể chọn layout riêng qua front matter "layout:"
+        # (mặc định trangweb.html; đặt "agency-duan-chitiet.html" để dùng giao diện Agency)
+        duong_dan_layout_du_an_nay = os.path.join(thu_muc_layout, du_an.get("layout") or "trangweb.html")
+        html = engine.render_trang(duong_dan_layout_du_an_nay, ngu_canh)
         _ghi_file(os.path.join(thu_muc_output, du_an["url"].strip("/"), "index.html"), html)
         so_trang_da_sinh += 1
     log(f"✓ Đã sinh {len(tat_ca_du_an)} trang dự án")
 
     # ---------- 6. Trang liệt kê theo tag ----------
-    for tag in tat_ca_tag:
-        bai_theo_tag = [b for b in tat_ca_bai if tag in b["tags"]]
+    for slug_tag in tat_ca_tag:
+        ten_tag = nhan_tag[slug_tag]
+        bai_theo_tag = [b for b in tat_ca_bai if slug_tag in {chuyen_thanh_slug(t) for t in b["tags"]}]
         ngu_canh = dict(ngu_canh_goc)
-        ngu_canh["tag_hien_tai"] = tag
+        ngu_canh["tag_hien_tai"] = ten_tag
         ngu_canh["danh_sach_bai_viet"] = bai_theo_tag
-        ngu_canh["tieu_de_liet_ke"] = f"Tag: #{tag}"
+        ngu_canh["tieu_de_liet_ke"] = f"Tag: #{ten_tag}"
         ngu_canh["noi_dung_trang"] = ""
-        ngu_canh["tieu_de_trang"] = f'Tag: {tag} — {cau_hinh["ten_trangweb"]}'
-        ngu_canh["the_seo"] = sinh_the_seo(cau_hinh, f"Tag: {tag}", cau_hinh["mo_ta"], f"/tag/{tag}/")
+        ngu_canh["tieu_de_trang"] = f'Tag: {ten_tag} — {cau_hinh["ten_trangweb"]}'
+        ngu_canh["the_seo"] = sinh_the_seo(cau_hinh, f"Tag: {ten_tag}", cau_hinh["mo_ta"], f"/tag/{slug_tag}/")
         html = engine.render_trang(duong_dan_layout_trangweb, ngu_canh)
-        _ghi_file(os.path.join(thu_muc_output, "tag", tag, "index.html"), html)
+        _ghi_file(os.path.join(thu_muc_output, "tag", slug_tag, "index.html"), html)
         so_trang_da_sinh += 1
     log(f"✓ Đã sinh {len(tat_ca_tag)} trang tag")
 
