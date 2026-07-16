@@ -1,0 +1,6 @@
+- ten: twitter
+  url: "https://twitter.com/"
+- ten: facebook
+  url: "https://facebook.com/"
+- ten: github
+  url: "https://github.com/"

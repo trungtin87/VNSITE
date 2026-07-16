@@ -1,0 +1,65 @@
+# =========================================================
+# _cauhinhtrangweb.yml — Cấu hình chính của website VNSITE
+# =========================================================
+
+# --- Thông tin chung ---
+ten_trangweb: "Blog của tôi"
+mo_ta: "Một blog cá nhân tạo bằng VNSITE — trình tạo website tĩnh cho người Việt"
+url: "https://tenban.github.io"        # domain gốc, dùng để sinh link tuyệt đối cho SEO
+baseurl: ""                             # để trống nếu là user.github.io ; đặt "/ten-repo" nếu là project site
+
+# Dùng cho theme Agency (trang chủ dạng one-page portfolio)
+loi_chao_agency: "Chào mừng đến với studio của chúng tôi!"
+tieu_de_agency: "Rất vui được gặp bạn"
+
+# Form liên hệ gửi thẳng vào Google Form (không cần máy chủ, hợp với GitHub Pages).
+# Cách lấy các giá trị bên dưới: chạy `python3 cong_cu/lay_ma_google_form.py "link-form-cua-ban"`
+google_form:
+  form_id: ""              # phần .../forms/d/e/XXXXXXXXXXXX/viewform -> chỉ lấy đoạn XXXXXXXXXXXX
+  entries:
+    ho_ten: ""              # entry.123456
+    email: ""                # entry.234567
+    dien_thoai: ""           # entry.345678 (bỏ trống nếu form không hỏi)
+    noi_dung: ""             # entry.456789
+ngon_ngu: "vi"
+tac_gia: "Tên của bạn"
+email: "ban@example.com"
+
+# --- Ảnh mặc định cho social/SEO khi bài viết không khai báo riêng ---
+anh_mac_dinh: "/tainguyen/hinhanh/og-mac-dinh.png"
+
+# --- Mạng xã hội (tùy chọn, dùng trong phanchantrang.html) ---
+mang_xa_hoi:
+  github: "https://github.com/tenban"
+  twitter: ""
+  linkedin: ""
+
+# --- Điều hướng chính (thanhdieuhuong.html) ---
+dieu_huong:
+  - ten: "Trang chủ"
+    duong_dan: "/"
+  - ten: "Bài viết"
+    duong_dan: "/bai-viet/"
+  - ten: "Dự án"
+    duong_dan: "/du-an/"
+  - ten: "Giới thiệu"
+    duong_dan: "/gioi-thieu/"
+  - ten: "CV"
+    duong_dan: "/cv/"
+
+# --- Cấu hình build ---
+thu_muc_output: "_ketqua"
+so_tu_moi_phut_doc: 200        # dùng để tính "reading time"
+so_tu_tomtat_mac_dinh: 60      # số từ cắt làm excerpt nếu bài không có marker <!--tomtat-->
+
+# --- Bình luận qua giscus (giai đoạn 3, tùy chọn) ---
+giscus:
+  bat: false
+  repo: ""
+  repo_id: ""
+  category: ""
+  category_id: ""
+
+# --- Tìm kiếm phía client (giai đoạn 3, tùy chọn) ---
+tim_kiem:
+  bat: true

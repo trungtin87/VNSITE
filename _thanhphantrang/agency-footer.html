@@ -1,0 +1,22 @@
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <span class="copyright">Bản quyền &copy; {{ cau_hinh.ten_trangweb }}</span>
+            </div>
+            <div class="col-md-4">
+                <ul class="list-inline social-buttons">
+                    {% moi mxh trong du_lieu.mang_xa_hoi_footer %}
+                    <li><a href="{{ mxh.url }}"><i class="fa fa-{{ mxh.ten }}"></i></a></li>
+                    {% het %}
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <ul class="list-inline quicklinks">
+                    <li><a href="{{ cau_hinh.baseurl }}/">Trang chủ</a></li>
+                    <li><a href="{{ cau_hinh.baseurl }}/du-an/">Dự án</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
