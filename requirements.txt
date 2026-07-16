@@ -1,3 +1,0 @@
-PyYAML>=6.0
-Markdown>=3.5
-Pillow>=10.0   # tùy chọn — chỉ cần nếu dùng tính năng tự sinh favicon (mục VII)
