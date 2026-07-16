@@ -5,8 +5,8 @@
 # --- Thông tin chung ---
 ten_trangweb: "Blog của tôi"
 mo_ta: "Một blog cá nhân tạo bằng VNSITE — trình tạo website tĩnh cho người Việt"
-url: "https://tenban.github.io"        # domain gốc, dùng để sinh link tuyệt đối cho SEO
-baseurl: ""                             # để trống nếu là user.github.io ; đặt "/ten-repo" nếu là project site
+url: "https://trungtin87.github.io"        # domain gốc, dùng để sinh link tuyệt đối cho SEO
+baseurl: "/VNSITE"                             # để trống nếu là user.github.io ; đặt "/ten-repo" nếu là project site
 
 # Dùng cho theme Agency (trang chủ dạng one-page portfolio)
 loi_chao_agency: "Chào mừng đến với studio của chúng tôi!"
@@ -30,7 +30,7 @@ anh_mac_dinh: "/tainguyen/hinhanh/og-mac-dinh.png"
 
 # --- Mạng xã hội (tùy chọn, dùng trong phanchantrang.html) ---
 mang_xa_hoi:
-  github: "https://github.com/tenban"
+  github: "https://github.com/trungtin87"
   twitter: ""
   linkedin: ""
 
