@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="{{ cau_hinh.ngon_ngu }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ tieu_de_trang }}</title>
+    <meta name="description" content="{{ cau_hinh.mo_ta }}">
+    <link rel="icon" href="{{ cau_hinh.baseurl }}/tainguyen/hinhanh/favicon.png">
+
+    <link rel="stylesheet" href="{{ cau_hinh.baseurl }}/tainguyen/css/vnstyle.css">
+    <link rel="stylesheet" href="{{ cau_hinh.baseurl }}/tainguyen/css/shop/shop.css">
+
+    {{ the_seo }}
+    <link rel="alternate" type="application/rss+xml" title="{{ cau_hinh.ten_trangweb }}" href="{{ cau_hinh.baseurl }}/rss.xml">
+</head>
+<body>
+{% nhung "shop-dieuhuong.html" %}
+
+<main>
+{% khoi noi_dung %}{% end %}
+</main>
+
+{% nhung "shop-footer.html" %}
+<script src="{{ cau_hinh.baseurl }}/tainguyen/js/shop/slider.js"></script>
+</body>
+</html>

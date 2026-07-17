@@ -1,0 +1,35 @@
+{% ke_thua "shop-macdinh.html" %}
+{% khoi noi_dung %}
+<div class="vn-chitiet-san-pham">
+    <div class="vn-slider">
+        <div class="vn-slider-anh">
+            {% moi anh trong du_an.anh_slider %}
+            <img src="{{ anh | duong_dan }}" alt="{{ du_an.tieu_de }}">
+            {% het %}
+        </div>
+    </div>
+
+    <div class="vn-thong-tin-san-pham">
+        {% neu du_an.danh_muc %}<span class="vn-danh-muc-san-pham">{{ du_an.danh_muc }}</span>{% hetneu %}
+        <h1>{{ du_an.tieu_de }}</h1>
+        {% neu du_an.gia %}<span class="vn-gia-san-pham">{{ du_an.gia | dinh_dang_gia }}</span>{% hetneu %}
+        <p>{{ du_an.mo_ta_ngan }}</p>
+        {{ du_an.noi_dung }}
+
+        {% neu cau_hinh.google_form_dat_hang.form_id %}
+        <a class="vn-nut-dat-hang"
+           href="https://docs.google.com/forms/d/e/{{ cau_hinh.google_form_dat_hang.form_id }}/viewform?usp=pp_url&{{ cau_hinh.google_form_dat_hang.entries.ten_san_pham }}={{ du_an.tieu_de | ma_hoa_url }}"
+           target="_blank" rel="noopener">
+            Đặt hàng ngay
+        </a>
+        {% khac %}
+        <p class="text-muted">
+            Chưa cấu hình <code>google_form_dat_hang</code> trong _cauhinhtrangweb.yml.
+            Chạy <code>python3 cong_cu/lay_ma_google_form.py "link-form-cua-ban"</code> để lấy mã rồi điền vào.
+        </p>
+        {% hetneu %}
+
+        <p><a href="{{ cau_hinh.baseurl }}/">&larr; Xem sản phẩm khác</a></p>
+    </div>
+</div>
+{% end %}

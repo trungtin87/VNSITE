@@ -1,0 +1,20 @@
+{% ke_thua "shop-macdinh.html" %}
+{% khoi noi_dung %}
+<article>
+    <h1>Giới thiệu {{ cau_hinh.ten_cua_hang }}</h1>
+    <p>{{ cau_hinh.mo_ta }}</p>
+
+    <p>Chúng tôi là cửa hàng chuyên cung cấp sản phẩm chất lượng, phục vụ khách hàng
+    tận tâm với phương châm uy tín đặt lên hàng đầu.</p>
+
+    <h2>Địa chỉ</h2>
+    <p>📍 {{ cau_hinh.dia_chi_cua_hang }}</p>
+    <p>🕒 Giờ mở cửa: {{ cau_hinh.gio_mo_cua }}</p>
+
+    <iframe class="vn-ban-do"
+        src="https://www.google.com/maps?q={{ cau_hinh.dia_chi_cua_hang | ma_hoa_url }}&output=embed"
+        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+    <p><a href="{{ cau_hinh.baseurl }}/lien-he-cua-hang/">Xem thông tin liên hệ &rarr;</a></p>
+</article>
+{% end %}

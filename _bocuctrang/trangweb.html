@@ -1,0 +1,42 @@
+{% ke_thua "trangmacdinh.html" %}
+{% khoi noi_dung %}
+<div class="trang-tong-quat">
+
+    {{ mo_dau_du_an }}
+    <h1 class="tieu-de-liet-ke">{{ tieu_de_liet_ke }}</h1>
+
+    <ul class="luoi-bai-viet">
+        {% moi bai trong danh_sach_bai_viet %}
+        <li class="the-bai-viet">
+            <a href="{{ bai.url | duong_dan }}"><h3>{{ bai.tieu_de }}</h3></a>
+            <p class="meta-bai-viet"><time>{{ bai.ngay }}</time> · {{ bai.thoi_gian_doc }} phút đọc</p>
+            <div class="excerpt">{{ bai.excerpt }}</div>
+        </li>
+        {% het %}
+    </ul>
+
+    {% neu phan_trang.tong_so_trang %}
+    <nav class="phan-trang" aria-label="Điều hướng trang">
+        {% neu phan_trang.co_trang_truoc %}
+        <a href="{{ phan_trang.url_trang_truoc | duong_dan }}">&larr; Trang trước</a>
+        {% hetneu %}
+        <span class="phan-trang-hien-tai">Trang {{ phan_trang.trang_hien_tai }} / {{ phan_trang.tong_so_trang }}</span>
+        {% neu phan_trang.co_trang_sau %}
+        <a href="{{ phan_trang.url_trang_sau | duong_dan }}">Trang sau &rarr;</a>
+        {% hetneu %}
+    </nav>
+    {% hetneu %}
+
+    <div class="luoi-du-an">
+        {% moi p trong danh_sach_du_an %}
+        <a class="the-du-an" href="{{ p.url | duong_dan }}">
+            <img src="{{ p.anh_dai_dien | duong_dan }}" alt="{{ p.tieu_de }}" loading="lazy">
+            <h3>{{ p.tieu_de }}</h3>
+            <p>{{ p.mo_ta_ngan }}</p>
+        </a>
+        {% het %}
+    </div>
+
+    {{ noi_dung_trang }}
+</div>
+{% end %}

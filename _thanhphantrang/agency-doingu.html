@@ -1,0 +1,27 @@
+<!-- Đội ngũ -->
+<section id="doi-ngu" class="bg-light-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">Đội ngũ</h2>
+                <h3 class="section-subheading text-muted">Những người đứng sau sản phẩm.</h3>
+            </div>
+        </div>
+        <div class="row">
+            {% moi tv trong du_lieu.doi_ngu_agency %}
+            <div class="col-sm-4">
+                <div class="team-member">
+                    <img src="{{ tv.anh | duong_dan }}" class="img-responsive img-circle" alt="{{ tv.ten }}">
+                    <h4>{{ tv.ten }}</h4>
+                    <p class="text-muted">{{ tv.chuc_vu }}</p>
+                    <ul class="list-inline social-buttons">
+                        {% moi mxh trong tv.mang_xa_hoi %}
+                        <li><a href="{{ mxh.url }}"><i class="fa fa-{{ mxh.ten }}"></i></a></li>
+                        {% het %}
+                    </ul>
+                </div>
+            </div>
+            {% het %}
+        </div>
+    </div>
+</section>

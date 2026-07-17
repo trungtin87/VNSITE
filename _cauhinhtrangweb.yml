@@ -1,0 +1,75 @@
+ten_trangweb: "Blog của tôi"
+mo_ta: "Một blog cá nhân tạo bằng VNSITE — trình tạo website tĩnh cho người Việt"
+url: "https://trungtin87.github.io"          # domain gốc, dùng để sinh link tuyệt đối cho SEO/sitemap/RSS
+baseurl: "/VNSITE"                             # để trống nếu là user.github.io ; đặt "/ten-repo" nếu là project site
+
+# Mẫu URL (permalink) — đổi cấu trúc đường dẫn ở đây, không cần sửa code.
+# Biến dùng được: bài viết (:chuyen_muc :nam :thang :slug), dự án/tag (:slug)
+# permalink_bai_viet: "/:chuyen_muc/:nam/:thang/:slug/"
+permalink_du_an: "/san-pham/:slug/"      # đổi thành "/du-an/:slug/" nếu không dùng theme Shop
+# permalink_tag: "/tag/:slug/"
+
+so_bai_moi_trang: 10                     # số bài mỗi trang ở /bai-viet/ (phân trang)
+
+# ---- Thông tin cửa hàng (dùng cho theme Shop) ----
+ten_cua_hang: "Cửa hàng của tôi"
+dia_chi_cua_hang: "123 Đường ABC, Phường X, Quận Y, TP.HCM"
+so_dien_thoai_cua_hang: "0900 000 000"
+email_cua_hang: "lienhe@cuahang.vn"
+gio_mo_cua: "8:00 - 21:00, tất cả các ngày trong tuần"
+
+# Đặt hàng: mở Google Form đã điền sẵn tên sản phẩm (không cần máy chủ).
+# Cách lấy entry.XXXX: python3 cong_cu/lay_ma_google_form.py "link-form/viewform"
+google_form_dat_hang:
+  form_id: ""              # phần .../forms/d/e/XXXXXXXXXXXX/viewform -> chỉ lấy XXXXXXXXXXXX
+  entries:
+    ten_san_pham: ""        # entry.XXXXX của câu hỏi "Sản phẩm muốn đặt"
+
+# ---- Dùng cho theme Agency (trang chủ dạng one-page portfolio) ----
+loi_chao_agency: "Chào mừng đến với studio của chúng tôi!"
+tieu_de_agency: "Rất vui được gặp bạn"
+
+# Form liên hệ (theme Agency) gửi thẳng vào Google Form qua iframe ẩn.
+google_form:
+  form_id: ""
+  entries:
+    ho_ten: ""              # entry.123456
+    email: ""                # entry.234567
+    dien_thoai: ""           # entry.345678 (bỏ trống nếu form không hỏi)
+    noi_dung: ""             # entry.456789
+
+ngon_ngu: "vi"
+tac_gia: "Tên của bạn"
+email: "ban@example.com"
+anh_mac_dinh: "/tainguyen/hinhanh/og-mac-dinh.png"
+
+mang_xa_hoi:
+  github: "https://github.com/trungtin87"
+  twitter: ""
+  linkedin: ""
+
+dieu_huong:
+  - ten: "Trang chủ"
+    duong_dan: "/"
+  - ten: "Bài viết"
+    duong_dan: "/bai-viet/"
+  - ten: "Dự án"
+    duong_dan: "/du-an/"
+  - ten: "Giới thiệu"
+    duong_dan: "/gioi-thieu/"
+  - ten: "CV"
+    duong_dan: "/cv/"
+
+thu_muc_output: "_ketqua"
+so_tu_moi_phut_doc: 200
+so_tu_tomtat_mac_dinh: 60
+
+giscus:
+  bat: false
+  repo: ""
+  repo_id: ""
+  category: ""
+  category_id: ""
+
+tim_kiem:
+  bat: true

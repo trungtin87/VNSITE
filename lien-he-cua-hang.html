@@ -1,0 +1,20 @@
+{% ke_thua "shop-macdinh.html" %}
+{% khoi noi_dung %}
+<article>
+    <h1>Liên hệ</h1>
+    <ul class="vn-thong-tin-cua-hang">
+        <li>📍 <strong>Địa chỉ:</strong> {{ cau_hinh.dia_chi_cua_hang }}</li>
+        {% neu cau_hinh.so_dien_thoai_cua_hang %}
+        <li>📞 <strong>Điện thoại:</strong> <a href="tel:{{ cau_hinh.so_dien_thoai_cua_hang }}">{{ cau_hinh.so_dien_thoai_cua_hang }}</a></li>
+        {% hetneu %}
+        {% neu cau_hinh.email_cua_hang %}
+        <li>✉️ <strong>Email:</strong> <a href="mailto:{{ cau_hinh.email_cua_hang }}">{{ cau_hinh.email_cua_hang }}</a></li>
+        {% hetneu %}
+        <li>🕒 <strong>Giờ mở cửa:</strong> {{ cau_hinh.gio_mo_cua }}</li>
+    </ul>
+
+    <iframe class="vn-ban-do"
+        src="https://www.google.com/maps?q={{ cau_hinh.dia_chi_cua_hang | ma_hoa_url }}&output=embed"
+        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</article>
+{% end %}

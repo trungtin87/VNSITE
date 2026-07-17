@@ -1,0 +1,25 @@
+{% ke_thua "shop-macdinh.html" %}
+{% khoi noi_dung %}
+<div class="vn-shop-header">
+    <h1>{{ cau_hinh.ten_cua_hang }}</h1>
+    <p>{{ cau_hinh.mo_ta }}</p>
+</div>
+
+<ul class="vn-luoi-san-pham">
+    {% moi sp trong danh_sach_du_an %}
+    <li>
+        <a class="vn-the-san-pham" href="{{ sp.url | duong_dan }}">
+            {% neu sp.anh_dai_dien %}
+            <img src="{{ sp.anh_dai_dien | duong_dan }}" alt="{{ sp.tieu_de }}" loading="lazy">
+            {% hetneu %}
+            <div class="vn-than-the">
+                {% neu sp.danh_muc %}<span class="vn-danh-muc-san-pham">{{ sp.danh_muc }}</span><br>{% hetneu %}
+                <h3>{{ sp.tieu_de }}</h3>
+                <p>{{ sp.mo_ta_ngan }}</p>
+                {% neu sp.gia %}<span class="vn-gia-san-pham">{{ sp.gia | dinh_dang_gia }}</span>{% hetneu %}
+            </div>
+        </a>
+    </li>
+    {% het %}
+</ul>
+{% end %}

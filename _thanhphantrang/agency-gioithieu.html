@@ -1,0 +1,38 @@
+<!-- Giới thiệu -->
+<section id="gioi-thieu">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">Giới thiệu</h2>
+                <h3 class="section-subheading text-muted">Hành trình của chúng tôi.</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="timeline">
+                    {% moi cot_moc trong du_lieu.cot_moc_agency %}
+                    <li>
+                        <div class="timeline-image">
+                            <img class="img-circle img-responsive" src="{{ cot_moc.anh | duong_dan }}" alt="{{ cot_moc.tieu_de }}">
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4>{{ cot_moc.thoi_gian }}</h4>
+                                <h4 class="subheading">{{ cot_moc.tieu_de }}</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p class="text-muted">{{ cot_moc.mo_ta }}</p>
+                            </div>
+                        </div>
+                    </li>
+                    {% het %}
+                    <li class="timeline-inverted">
+                        <div class="timeline-image">
+                            <h4>Cùng<br>viết tiếp<br>câu chuyện!</h4>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

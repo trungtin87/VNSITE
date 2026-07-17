@@ -1,0 +1,7 @@
+<footer style="text-align:center; padding: 2rem 1rem; margin-top: 3rem; border-top: 1px solid #eee;">
+    <p><strong>{{ cau_hinh.ten_cua_hang }}</strong> — {{ cau_hinh.dia_chi_cua_hang }}</p>
+    <p>
+        {% neu cau_hinh.so_dien_thoai_cua_hang %}📞 {{ cau_hinh.so_dien_thoai_cua_hang }}{% hetneu %}
+        {% neu cau_hinh.email_cua_hang %} · ✉️ {{ cau_hinh.email_cua_hang }}{% hetneu %}
+    </p>
+</footer>

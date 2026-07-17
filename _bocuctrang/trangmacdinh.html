@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="{{ cau_hinh.ngon_ngu }}" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ tieu_de_trang }}</title>
+    <meta name="description" content="{{ cau_hinh.mo_ta }}">
+    {{ the_seo }}
+    <link rel="alternate" type="application/rss+xml" title="{{ cau_hinh.ten_trangweb }}" href="{{ cau_hinh.baseurl }}/rss.xml">
+    <link rel="icon" href="{{ cau_hinh.baseurl }}/tainguyen/hinhanh/favicon.png">
+    <link rel="stylesheet" href="{{ cau_hinh.baseurl }}/tainguyen/css/vnstyle.css">
+    <link rel="stylesheet" href="{{ cau_hinh.baseurl }}/tainguyen/css/main.css">
+</head>
+<body>
+    {% nhung "phandautrang.html" %}
+    {{ khoi_tim_kiem }}
+    {% nhung "thanhdieuhuong.html" %}
+
+    <main hien-thi="khung-chua" class="noi-dung-chinh">
+        {% khoi noi_dung %}
+        <p>Trang chưa có nội dung.</p>
+        {% end %}
+    </main>
+
+    {% nhung "phanchantrang.html" %}
+
+    <script>window.VNSITE_BASEURL = "{{ cau_hinh.baseurl }}";</script>
+    <script src="{{ cau_hinh.baseurl }}/tainguyen/js/che-do-toi-sang.js"></script>
+    <script src="{{ cau_hinh.baseurl }}/tainguyen/js/muc-luc.js"></script>
+    <script src="{{ cau_hinh.baseurl }}/tainguyen/js/sao-chep-code.js"></script>
+    <script src="{{ cau_hinh.baseurl }}/tainguyen/js/tim-kiem.js"></script>
+</body>
+</html>
